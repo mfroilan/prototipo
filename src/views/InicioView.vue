@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class="productos-container">
     <!-- Titulo de la vista -->
-    <h2 class="section-title">Productos 🍇🍈🍉</h2>
+    <h2 class="section-title">Productos</h2>
 
     <!-- Barra de búsqueda -->
     <div class="search-bar-container">
       <div class="search-bar">
         <input type="text"
-               v-model="terminoDeBusqueda" placeholder="Buscar por nombre..." class="search-input"/>
+               v-model="terminoDeBusqueda" placeholder="🔍 Buscar por nombre..." class="search-input"/>
       </div>
     </div>
 
@@ -70,7 +70,15 @@ export default {
 </script>
 
 <style>
+
+.productos-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 .cart-indicator-container {
   margin-bottom: 20px;
 }
+
 </style>

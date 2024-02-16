@@ -4,7 +4,7 @@ export default {};
 <template>
   <nav>
     <RouterLink to="/">Inicio</RouterLink>
-    <RouterLink to="/about">Registrar</RouterLink>
+    <RouterLink to="/add">Registrar</RouterLink>
     <RouterLink to="/cart">Pedido</RouterLink>
   </nav>
 </template>

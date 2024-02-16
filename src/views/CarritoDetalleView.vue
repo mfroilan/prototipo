@@ -1,37 +1,40 @@
 <template>
-  <div>
-    <h1>Detalle del Carrito</h1>
+  <div class="cart-wrapper">
+    <p>&nbsp;</p>
+    <h2 class="section-title">Detalle del Carrito</h2>
     <!-- Aquí va el contenido del carrito -->
     <div class="cart-container">
-      <div class="cart-items">
-        <table class="cart-table">
-          <thead>
-          <tr>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Precio Unitario</th>
-            <th>Cantidad</th>
-            <th>Total</th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="(item, index) in itemsAgrupadosDelCarrito" :key="index" class="cart-item">
-            <td>
-              <img :src="item.producto.imagenProducto" :alt="item.producto.nombre" width="48">
-            </td>
-            <td>{{ item.producto.nombre }}</td>
-            <td>Bs. {{ item.producto.precio }}</td>
-            <td>{{ item.cantidad }}</td>
-            <td>{{ calcularElSubtotal(item) }}</td>
-            <td><button @click="removerDelCarrito(item)">Remover</button></td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+      <table class="cart-table">
+        <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>P.U.</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item, index) in itemsAgrupadosDelCarrito" :key="index" class="cart-item">
+          <td>
+            <img :src="item.producto.imagenProducto" :alt="item.producto.nombre" width="48">
+          </td>
+          <td>{{ item.producto.nombre }}</td>
+          <td>{{ item.producto.precio }}</td>
+          <td>{{ item.cantidad }}</td>
+          <td>{{ calcularElSubtotal(item) }}</td>
+          <td>
+            <button @click="removerDelCarrito(item)">Remover</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
       <div class="cart-total">
         <h4>Total del Carrito</h4>
         <p> Bs. {{ calcularElTotal() }}</p>
+        <p>&nbsp;</p>
+        <button>Ir a Pagar</button>
       </div>
     </div>
   </div>
@@ -55,7 +58,7 @@ export default {
           const articuloExistente = cartMap.get(item.id);
           articuloExistente.cantidad += 1;
         } else {
-          const nuevoArticulo = { producto: item, cantidad: 1 };
+          const nuevoArticulo = {producto: item, cantidad: 1};
           cartMap.set(item.id, nuevoArticulo);
         }
       });
@@ -95,30 +98,16 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos para el componente */
+/* Estilos para este componente */
+.cart-wrapper {
+  padding: 10px;
+  font-family: 'Arial', sans-serif;
+}
+
 .cart-container {
   display: flex;
-  justify-content: space-between;
-}
-
-.cart-items {
-  width: 70%;
-}
-
-.cart-total {
-  width: 25%;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.cart-total h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.cart-total p {
-  font-size: 18px;
-  font-weight: bold;
+  flex-direction: column;
+  margin-top: 20px;
 }
 
 .cart-table {
@@ -128,17 +117,50 @@ export default {
 
 .cart-table th,
 .cart-table td {
-  padding: 8px;
   text-align: left;
+  padding: 4px;
   border-bottom: 1px solid #ddd;
 }
 
-.cart-item:nth-child(even) {
-  background-color: #FFA726;
-  color: #282828;
+.cart-table img {
+  width: 42px; /* Tamaño fijo para móviles */
 }
 
-.cart-item:hover {
-  /*background-color: #E8EAF6;*/
+.cart-total {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.cart-total h4 {
+  margin-bottom: 0.5rem;
+}
+
+button {
+  background-color: #007bff;
+  //border: 1px solid #ddd;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+button:hover {
+  //background-color: #3eb0e1;
+}
+
+@media (min-width: 768px) {
+  .cart-table img {
+    width: auto; /* Tamaño más grande para pantallas más grandes */
+  }
+
+  .cart-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .cart-total {
+    width: 250px;
+    margin-top: 0;
+  }
+
 }
 </style>
