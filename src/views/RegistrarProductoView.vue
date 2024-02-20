@@ -2,27 +2,96 @@
   <div class="producto-form-container">
     <h2 class="section-title">Registro</h2>
     <p>&nbsp;</p>
-    <form class="product-form">
+    <form class="product-form" @submit.prevent="enviarFormulario">
       <div class="form-group">
         <label for="product-name">Nombre del producto</label>
         <input type="text" id="product-name" name="product-name" placeholder="Introduce el nombre del producto"
+               v-model="producto.nombre"
                required>
       </div>
 
       <div class="form-group">
         <label for="product-price">Precio</label>
-        <input type="number" id="product-price" name="product-price" placeholder="Introduce el precio" required>
+        <input type="number" id="product-price" name="product-price" placeholder="Introduce el precio"
+               step="0.01" min="0"
+               v-model="producto.precio"
+               required>
       </div>
 
       <div class="form-group">
         <label for="product-image">Imagen del producto</label>
-        <input type="file" id="product-image" name="product-image" accept="image/*" required>
+        <input type="file" id="product-image" name="product-image" accept="image/*"
+               @change="seleccionarImagen">
       </div>
 
       <button type="submit" class="submit-btn">Registrar Producto</button>
     </form>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      producto: {
+        nombre: '',
+        precio: '',
+      },
+      imagen: null,
+    };
+  },
+  methods: {
+    seleccionarImagen(event) {
+      this.imagen = event.target.files[0]; // Guardar la imagen seleccionada
+    },
+    obtenerEnteroAleatorio(min, max) {
+      return Math.floor(Math.random() * (max - min) + min);
+    },
+    enviarFormulario() {
+      const CLIENTE_FAKE = 1002;
+
+      const producto = {
+        id: this.obtenerEnteroAleatorio(10, 100),
+        nombre: this.producto.nombre,
+        precio: this.producto.precio,
+        clienteId: CLIENTE_FAKE
+      };
+      const formData = new FormData();
+      formData.append('datos', JSON.stringify(producto));
+
+      if (this.imagen) {
+        formData.append('imagen', this.imagen);
+      }
+
+      const opciones = {
+        method: 'POST',
+        body: formData,
+        // El 'Content-Type' a 'multipart/form-data' aquí; Fetch se encarga de eso
+      };
+
+      for (let [key, value] of formData.entries()) {
+        console.log('clave-valor', key, value);
+      }
+
+
+      fetch('http://localhost:2024/api/v1/productos/form', opciones)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('La respuesta de la red no fue ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('Producto registrado:', data);
+          })
+          .catch(error => {
+            console.error('Error al registrar el producto:', error);
+          });
+
+    },
+  },
+};
+</script>
 
 <style>
 .producto-form-container {

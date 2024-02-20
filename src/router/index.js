@@ -18,6 +18,11 @@ const router = createRouter({
             path: '/cart',
             name: 'cart-detail',
             component: () => import('../views/CarritoDetalleView.vue')
+        },
+        {
+            path: '/image',
+            name: 'upload-image',
+            component: () => import('../views/AgregarImagenProductoView.vue')
         }
     ]
 });

@@ -25,9 +25,6 @@
 </template>
 
 <script>
-import naranjaUrl from "@/assets/frutas/naranja.png";
-import peraUrl from "@/assets/frutas/pera.png";
-import sandiaUrl from "@/assets/frutas/sandia.png";
 
 import CartIndicator from './CarritoIndicadorView.vue';
 import ProductItem from './ProductoItemView.vue';
@@ -40,9 +37,7 @@ export default {
   data() {
     return {
       productos: [
-        {id: 1, nombre: 'Naranja', precio: 10, imagenProducto: naranjaUrl},
-        {id: 2, nombre: 'Pera', precio: 15, imagenProducto: peraUrl},
-        {id: 3, nombre: 'Sandia', precio: 20, imagenProducto: sandiaUrl},
+        // {id: 1, nombre: 'Naranja', precio: 10, imagenProducto: naranjaUrl},
       ],
       terminoDeBusqueda: '',
       cantidadDeProductos: 0
@@ -58,6 +53,9 @@ export default {
       return this.productos;
     }
   },
+  mounted() {
+    this.obtenerProductos();
+  },
   methods: {
     agregarAlCarrito(pProducto) {
       this.cantidadDeProductos++;
@@ -65,12 +63,21 @@ export default {
       itemsDelCarrito.push(pProducto);
       localStorage.setItem('cartItems', JSON.stringify(itemsDelCarrito));
     },
+    obtenerProductos() {
+      const URL_IP = "http://172.16.21.149:2024";
+      const URL_LOCAL = "http://localhost:2024";
+      fetch(`${URL_LOCAL}/api/v1/productos`)
+          .then(response => response.json())
+          .then(data => {
+            this.productos = data; // Almacenar los productos en el estado
+          })
+          .catch(error => console.error('Error al obtener los productos:', error));
+    },
   }
 };
 </script>
 
 <style>
-
 .productos-container {
   max-width: 600px;
   margin: 0 auto;
@@ -80,5 +87,4 @@ export default {
 .cart-indicator-container {
   margin-bottom: 20px;
 }
-
 </style>
