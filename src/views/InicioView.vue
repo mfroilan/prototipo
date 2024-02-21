@@ -36,9 +36,7 @@ export default {
   },
   data() {
     return {
-      productos: [
-        // {id: 1, nombre: 'Naranja', precio: 10, imagenProducto: naranjaUrl},
-      ],
+      productos: [],
       terminoDeBusqueda: '',
       cantidadDeProductos: 0
     };
@@ -64,7 +62,6 @@ export default {
       localStorage.setItem('cartItems', JSON.stringify(itemsDelCarrito));
     },
     obtenerProductos() {
-      const URL_IP = "http://172.16.21.149:2024";
       const URL_LOCAL = "http://localhost:2024";
       fetch(`${URL_LOCAL}/api/v1/productos`)
           .then(response => response.json())

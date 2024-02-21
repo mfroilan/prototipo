@@ -12,8 +12,8 @@
 
 <script>
 import imagenPredeterminada from '@/assets/3561856_blank_dead_emoticon_icon.png';
-const URL_IP = "http://172.16.21.149:2024";
 const URL_LOCAL = "http://localhost:2024";
+
 export default {
   props: ['producto_prop'],
   methods: {

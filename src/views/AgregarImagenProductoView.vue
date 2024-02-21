@@ -63,7 +63,7 @@ export default {
       const formData = new FormData();
       formData.append('image', this.imagen);
 
-      axios.post(`http://localhost:2024/api/v1/productos/${this.selectedProductId}/upload`, formData, {
+      axios.post(`http://localhost:2024/api/v1/productos/${this.selectedProductId}/cargar`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
